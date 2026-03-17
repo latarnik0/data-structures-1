@@ -8,8 +8,9 @@ The goal of this project is to deepen the understanding of memory managment and 
 
 ## Functionality 
 * **Adding elements to the front, back and to the chosen index** 
-* **Removing elements from the front, back and from chosen index** 
-* **Searching element of given index** 
+* **Removing elements from the front, back and from chosen index**
+* **Searching element of given index**
+* **Replacing element on the given index** 
 
 ## Computational complexity analisys
 
@@ -24,6 +25,4 @@ TODO
     * *Computational Complexity*
 
 ## Prerequisites
-* C++ Compiler (g++ or clang++) supporting C++11 or newer
-* CMake (min. version 3.10) and Make
-
+* C++ Compiler
