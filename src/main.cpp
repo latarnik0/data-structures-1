@@ -1,16 +1,17 @@
 #include <iostream>
 #include <memory>
+#include <stdexcept>
+
+constexpr int DEF_SIZE = 2;
+
+class slist{
+
+};
 
 class darray{
     int* data;
     int size;
     int capacity;
-
-    void init(int c){
-        capacity = c;
-        data = new int[capacity];
-        size = 0;
-    }
 
     void resize(){
         capacity *= 2;
@@ -23,7 +24,13 @@ class darray{
     }
     
 public:
-    void front(int val){
+    void initArr(){
+        capacity = DEF_SIZE;
+        data = new int[capacity];
+        size = 0;
+    }
+
+    void insFront(int val){
         if(size == capacity){
             resize();
         }
@@ -34,6 +41,59 @@ public:
         data[0] = val;
         size++;
     }
+
+    void insBack(int val){
+        if(size == capacity){
+            resize();
+        }
+        data[size] = val;
+        size++;
+    }
+
+    void insAt(int val, int index){
+        if(size == capacity){
+            resize();
+        }
+
+        if(index == size){
+            insBack(val);
+        }
+        else if(index == 0){
+            insFront(val);
+        }
+        else{
+        
+            if(index > capacity){
+                throw std::out_of_range("Index out of bounds!");
+            }
+
+            for(int i=size-1; i>=index; i--){
+                data[i+1] = data[i];
+            }
+            data[index] = val;
+            size++;
+        }
+    }
+
+    void replaceAt(int val, int index){
+        if(index > size){
+                throw std::out_of_range("Index out of bounds!");
+        }
+        data[index] = val;
+    }
+
+    void peekAt(int index){
+        std::cout<<data[index]<<'\n';
+    }
+    
+
+    void printArr(){
+        for(int i=0; i<capacity; i++){
+            printf("%d ", data[i]);
+
+        }
+    }
+
 };
 
 int main(){
