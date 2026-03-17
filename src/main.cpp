@@ -30,7 +30,7 @@ public:
         size = 0;
     }
 
-    void insFront(int val){
+    void insf(int val){
         if(size == capacity){
             resize();
         }
@@ -42,7 +42,7 @@ public:
         size++;
     }
 
-    void insBack(int val){
+    void insb(int val){
         if(size == capacity){
             resize();
         }
@@ -50,16 +50,16 @@ public:
         size++;
     }
 
-    void insAt(int val, int index){
+    void insa(int val, int index){
         if(size == capacity){
             resize();
         }
 
         if(index == size){
-            insBack(val);
+            insb(val);
         }
         else if(index == 0){
-            insFront(val);
+            insf(val);
         }
         else{
         
@@ -73,6 +73,13 @@ public:
             data[index] = val;
             size++;
         }
+    }
+
+    void erasef(){
+        for(int i=0; i<size; i++){
+            data[i] = data[i+1];
+        }
+        size--;
     }
 
     void replaceAt(int val, int index){
@@ -98,5 +105,10 @@ public:
 
 int main(){
     darray d;
+    d.initArr();
+    d.insf(123);
+    d.insf(987);
+    d.erasef();
+    d.printArr();
     return 0;
 }
