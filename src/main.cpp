@@ -30,7 +30,7 @@ public:
         size = 0;
     }
 
-    void insf(int val){
+    void insFront(int val){
         if(size == capacity){
             resize();
         }
@@ -42,7 +42,7 @@ public:
         size++;
     }
 
-    void insb(int val){
+    void insBack(int val){
         if(size == capacity){
             resize();
         }
@@ -50,21 +50,21 @@ public:
         size++;
     }
 
-    void insa(int val, int index){
+    void insAt(int val, int index){
         if(size == capacity){
             resize();
         }
 
         if(index == size){
-            insb(val);
+            insBack(val);
         }
         else if(index == 0){
-            insf(val);
+            insFront(val);
         }
         else{
         
             if(index > capacity){
-                throw std::out_of_range("Index out of bounds!");
+                throw std::out_of_range("Index out of bounds");
             }
 
             for(int i=size-1; i>=index; i--){
@@ -75,9 +75,22 @@ public:
         }
     }
 
-    void erasef(){
+    void eraseFront(){
         for(int i=0; i<size; i++){
             data[i] = data[i+1];
+        }
+        size--;
+    }
+
+    void eraseBack(){
+        data[size-1] = 0;
+        size--;
+    }
+
+    void eraseAt(int index){
+        data[index] = 0;
+        for(int i=index+1; i<size; i++){
+            data[i-1] = data[i];
         }
         size--;
     }
@@ -95,9 +108,9 @@ public:
     
 
     void printArr(){
-        for(int i=0; i<capacity; i++){
+        for(int i=0; i<size; i++){
             printf("%d ", data[i]);
-
+            printf("%s", " ");
         }
     }
 
@@ -105,10 +118,5 @@ public:
 
 int main(){
     darray d;
-    d.initArr();
-    d.insf(123);
-    d.insf(987);
-    d.erasef();
-    d.printArr();
     return 0;
 }
