@@ -4,9 +4,92 @@
 
 constexpr int DEF_SIZE = 2;
 
-class slist{
+class node{
+public:
+    int data;
+    node* next;
+    node* prev;
 
+    node(int d) {
+        data = d;
+        prev = nullptr;
+        next = nullptr;
+    }
 };
+
+class slist{
+private:
+    node* head;
+
+public:
+    slist(){};
+    
+    void addFront(int val){
+        node* new_node = new node(val);
+        new_node->next = head;
+        head = new_node;
+    }
+
+    void rmFront(){
+        if(head == nullptr){
+            throw std::out_of_range("List already empty!");
+        }
+        node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    void addBack(int val){
+        node* new_node = new node(val);
+
+        if(head == nullptr){
+            head = new_node;
+            return;
+        }
+
+        node* temp = head;
+
+        while(temp->next != nullptr){      
+            temp = temp->next;
+        }
+        temp->next = new_node;
+        new_node->next = nullptr;
+    }
+
+    void rmBack(){
+        // TODO
+    }
+
+    void addAt(){
+        // TODO
+    }
+
+    void rmAt(){
+        // TODO
+    }
+
+    void lookAt(int index){
+        if(head == nullptr){
+            throw std::out_of_range("List is empty!");
+        }
+
+        node* temp = head;
+        for(int i=0; i<index; ++i){
+            if(temp != nullptr){
+                temp = temp->next;
+            }
+            else{
+                throw std::out_of_range("Invalid index!");
+            }
+        }
+        if(temp == nullptr){
+            throw std::out_of_range("Invalid index!");
+        }
+        printf("%d", temp->data);
+    }
+};
+
+//-----------------------------------------------------
 
 class darray{
     int* data;
@@ -103,7 +186,7 @@ public:
     }
 
     void peekAt(int index){
-        std::cout<<data[index]<<'\n';
+        printf("%d", data[index])<<'\n';
     }
     
 
