@@ -4,6 +4,9 @@
 
 constexpr int DEF_SIZE = 2;
 
+// -------------- DOUBLY LINKED LIST --------------
+
+// pojedynczy węzeł
 class node{
 public:
     int data;
@@ -17,15 +20,22 @@ public:
     }
 };
 
-class slist{
+// lista 
+class dlist{
 private:
     node* head;
 
 public:
-    slist(){};
+    dlist(){};
     
     void addFront(int val){
         node* new_node = new node(val);
+        if(head == nullptr){
+            head = new_node;
+            new_node->prev = nullptr;
+            new_node->next = nullptr;
+        }
+        head->prev = new_node;
         new_node->next = head;
         head = new_node;
     }
@@ -34,20 +44,82 @@ public:
         if(head == nullptr){
             throw std::out_of_range("List already empty!");
         }
-        node* temp = head;
+        node* del = head;
+        head = head->next;
+        if (head != nullptr) {
+            head->prev = nullptr;
+        }
+        delete del;
+    }
+
+    void addBack(int val){
+        // TODO
+    }
+
+    void rmBack(){ 
+        // TODO
+
+    }
+
+    void addAt(int val, int index){
+        // TODO
+    }
+
+    void rmAt(int index){
+        // TODO
+    }
+
+    void lookAt(int index){
+        // TODO
+    }
+};
+
+
+// -------------- SINGLY LINKED LIST --------------
+
+class snode{
+public:
+    int data;
+    snode* next;
+
+    snode(int d) {
+        data = d;
+        next = nullptr;
+    }
+};
+
+// lista
+class slist{
+private:
+    snode* head;
+
+public:
+    slist(){};
+    
+    void addFront(int val){
+        snode* new_node = new snode(val);
+        new_node->next = head;
+        head = new_node;
+    }
+
+    void rmFront(){
+        if(head == nullptr){
+            throw std::out_of_range("List already empty!");
+        }
+        snode* temp = head;
         head = head->next;
         delete temp;
     }
 
     void addBack(int val){
-        node* new_node = new node(val);
+        snode* new_node = new snode(val);
 
         if(head == nullptr){
             head = new_node;
             return;
         }
 
-        node* temp = head;
+        snode* temp = head;
 
         while(temp->next != nullptr){      
             temp = temp->next;
@@ -56,16 +128,47 @@ public:
         new_node->next = nullptr;
     }
 
-    void rmBack(){
-        // TODO
+    void rmBack(){ 
+        snode* temp = head;
+
+        while(temp->next->next != nullptr){      
+            temp = temp->next;
+        }
+        snode* del;
+        del = temp->next;
+        temp = nullptr;
+        delete del;
     }
 
-    void addAt(){
-        // TODO
+    void addAt(int val, int index){
+        snode* temp = head;
+        snode* new_node = new snode(val);
+        for(int i=0; i<index; ++i){
+            if(temp == nullptr){
+                throw std::out_of_range("Invalid index");
+            }
+            else{
+                temp = temp->next;
+            }
+        }
+        new_node->next = temp->next;
+        temp->next = new_node;
     }
 
-    void rmAt(){
-        // TODO
+    void rmAt(int index){
+        snode* temp = head;
+        for(int i=0; i<index; ++i){
+            if(temp == nullptr){
+                throw std::out_of_range("Invalid index");
+            }
+            else{
+                temp = temp->next;
+            }
+        }
+        snode* del;
+        del = temp->next;
+        temp->next = temp->next->next;
+        delete del;
     }
 
     void lookAt(int index){
@@ -73,7 +176,7 @@ public:
             throw std::out_of_range("List is empty!");
         }
 
-        node* temp = head;
+        snode* temp = head;
         for(int i=0; i<index; ++i){
             if(temp != nullptr){
                 temp = temp->next;
@@ -89,7 +192,7 @@ public:
     }
 };
 
-//-----------------------------------------------------
+//-------------------- TABLICA DYNAMICZNA ----------------------
 
 class darray{
     int* data;
