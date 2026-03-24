@@ -2,7 +2,7 @@
 #include <memory>
 #include <stdexcept>
 
-constexpr int DEF_SIZE = 2;
+constexpr int DEF_ARR_SIZE = 2;
 
 // -------------- DOUBLY LINKED LIST --------------
 
@@ -287,7 +287,7 @@ class darray{
     
 public:
     void initArr(){
-        capacity = DEF_SIZE;
+        capacity = DEF_ARR_SIZE;
         data = new int[capacity];
         size = 0;
     }

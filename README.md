@@ -3,26 +3,13 @@
 ## Overview
 
 Implementation of Dynamic Array and Linked List from scratch in **C++**.
-The goal of this project is to deepen the understanding of memory managment and the concept of computational complexity for different data structures.
-
 
 ## Functionality 
 * **Adding elements to the front, back and to the chosen index** 
 * **Removing elements from the front, back and from chosen index**
-* **Searching element of given index**
-* **Replacing element on the given index** 
+* **Searching an element of given index**
 
 ## Computational complexity analisys
 
 TODO
 
-## Technical Highlights
-* **C++ Development:**
-    * *Manipulation and working with pointers*
-    * *Heap corruption resolution*
-    * *Object Oriented Programming*
-    * *Understanding of 'shadowing' problems*
-    * *Computational Complexity*
-
-## Prerequisites
-* C++ Compiler
