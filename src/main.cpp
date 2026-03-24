@@ -35,9 +35,11 @@ public:
             new_node->prev = nullptr;
             new_node->next = nullptr;
         }
-        head->prev = new_node;
-        new_node->next = head;
-        head = new_node;
+        else{
+            head->prev = new_node;
+            new_node->next = head;
+            head = new_node;
+        }
     }
 
     void rmFront(){
@@ -53,24 +55,98 @@ public:
     }
 
     void addBack(int val){
-        // TODO
+        node* new_node = new node(val);
+        if(head == nullptr){
+            head = new_node;
+            head->next = nullptr;
+            head->prev = nullptr;
+        }
+        else{
+            node* temp = head;
+            while(temp->next != nullptr){
+                temp = temp->next;
+            }
+            new_node->next = nullptr;
+            temp->next = new_node;
+            new_node->prev = temp;
+        }
     }
 
     void rmBack(){ 
-        // TODO
+        if(head == nullptr){
+            throw std::out_of_range("List already empty!");
+        }
+        if (head->next == nullptr){
+            delete head;
+        }
 
+        node* temp = head;;
+        while(temp->next != nullptr){
+            temp = temp->next;
+        }
+
+        if (temp->prev != nullptr){
+            temp->prev->next = nullptr;
+        }
+        delete temp;
     }
 
     void addAt(int val, int index){
-        // TODO
+        if(head == nullptr){
+            addFront(val);
+        }
+        else{
+            node* new_node = new node(val);
+            node* temp = head;
+            for(int i=0; i<index; ++i){
+                temp = temp->next;
+            }
+            new_node->next = temp->next;
+            new_node->prev = temp;
+            if(temp->next != nullptr){
+                temp->next->prev = new_node;
+            }
+            temp->next = new_node;
+        }
     }
 
     void rmAt(int index){
-        // TODO
+        if(head == nullptr){
+            throw std::out_of_range("List already empty!");
+        }
+
+        if(index == 0){
+            rmFront();
+        }
+        else{
+            node* temp = head;
+            for(int i=0; i<index; ++i){
+                temp = temp->next;
+                if (temp == nullptr){
+                    throw std::out_of_range("Invalid index!");
+                }
+            }
+
+            if(temp->prev != nullptr){
+                temp->prev->next = temp->next;
+            }
+
+            if(temp->next != nullptr){
+                temp->next->prev = temp->prev;
+            }
+            delete temp;
+        }
     }
 
     void lookAt(int index){
-        // TODO
+        if(head == nullptr){
+            printf("%s", "List is empty");
+        }
+        node* temp = head;
+        for(int i=0; i<index; ++i){
+            temp = temp->next;
+        }
+        printf("%d", temp->data);
     }
 };
 
@@ -303,6 +379,5 @@ public:
 };
 
 int main(){
-    darray d;
     return 0;
 }
