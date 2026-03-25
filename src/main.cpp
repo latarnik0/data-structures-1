@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
+#include <vector>
+#include <chrono>
 
 constexpr int DEF_ARR_SIZE = 2;
 
@@ -26,7 +28,9 @@ private:
     node* head;
 
 public:
-    dlist(){};
+    dlist(){
+        head = nullptr;
+    };
     
     void addFront(int val){
         node* new_node = new node(val);
@@ -39,6 +43,7 @@ public:
             head->prev = new_node;
             new_node->next = head;
             head = new_node;
+            new_node->prev = nullptr;
         }
     }
 
@@ -170,7 +175,9 @@ private:
     snode* head;
 
 public:
-    slist(){};
+    slist(){
+        head = nullptr;
+    };
     
     void addFront(int val){
         snode* new_node = new snode(val);
@@ -192,6 +199,7 @@ public:
 
         if(head == nullptr){
             head = new_node;
+            head->next = nullptr;
             return;
         }
 
@@ -286,10 +294,10 @@ class darray{
     }
     
 public:
-    void initArr(){
-        capacity = DEF_ARR_SIZE;
-        data = new int[capacity];
-        size = 0;
+    darray() {
+        capacity = 1;          
+        size = 0;                   
+        data = new int[capacity];   
     }
 
     void insFront(int val){
@@ -367,17 +375,57 @@ public:
     void peekAt(int index){
         printf("%d", data[index])<<'\n';
     }
-    
-
-    void printArr(){
-        for(int i=0; i<size; i++){
-            printf("%d ", data[i]);
-            printf("%s", " ");
-        }
-    }
-
 };
 
+// -------------- TESTY --------------
+
+void testAddFront() {
+    std::cout << "--- Adding to the front (time in ns) ---\n";
+    std::cout << "N;ARR;SLL;DLL\n";
+
+    std::vector<int> v = {10, 100, 1000, 10000};
+    int samples = 10;
+
+    for (int N : v){
+        long long ARR_TIME = 0, SL_TIME = 0, DL_TIME = 0;
+
+        for(int i=0; i<samples; ++i) {
+            darray arr;
+            slist sl;
+            dlist dl;
+            
+            for(int j=0; j<N; ++j) {
+                arr.insBack(i);
+                sl.addBack(i);
+                dl.addBack(i);
+            }
+
+            // POMIAR TABLICY
+            auto start = std::chrono::high_resolution_clock::now();
+            arr.insFront(99);
+            auto end = std::chrono::high_resolution_clock::now();
+            ARR_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+
+            // POMIAR LISTY JEDNOKIERUNKOWEJ
+            start = std::chrono::high_resolution_clock::now();
+            sl.addFront(99);
+            end = std::chrono::high_resolution_clock::now();
+            SL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+
+            // POMIAR LISTY DWUKIERUNKOWEJ
+            start = std::chrono::high_resolution_clock::now();
+            dl.addFront(99);
+            end = std::chrono::high_resolution_clock::now();
+            DL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+        }
+
+        // WYNIKI DLA DANEGO 'N'
+        std::cout<<N<<";"<<(ARR_TIME/samples)<<";"<<(SL_TIME/samples)<<";"<<(DL_TIME/samples)<<"\n";
+    }
+    std::cout << "\n";
+}
+
 int main(){
+    testAddFront();
     return 0;
 }
