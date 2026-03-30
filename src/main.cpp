@@ -4,8 +4,6 @@
 #include <vector>
 #include <chrono>
 
-constexpr int DEF_ARR_SIZE = 2;
-
 // -------------- DOUBLY LINKED LIST --------------
 
 // pojedynczy węzeł
@@ -144,14 +142,24 @@ public:
     }
 
     void lookAt(int index){
-        if(head == nullptr){
-            printf("%s", "List is empty");
+        if(index<0){
+            throw std::out_of_range("Invalid index!");
         }
+        if(head == nullptr){
+            throw std::out_of_range("List is empty!");
+        }
+
         node* temp = head;
         for(int i=0; i<index; ++i){
             temp = temp->next;
+            if(temp == nullptr){
+                throw std::out_of_range("Invalid index!");
+            }
         }
-        printf("%d", temp->data);
+        if(temp == nullptr){
+            throw std::out_of_range("Invalid index!");
+        }
+        int x = temp->data;
     }
 };
 
@@ -256,23 +264,24 @@ public:
     }
 
     void lookAt(int index){
+        if(index<0){
+            throw std::out_of_range("Invalid index!");
+        }
         if(head == nullptr){
             throw std::out_of_range("List is empty!");
         }
 
         snode* temp = head;
         for(int i=0; i<index; ++i){
-            if(temp != nullptr){
-                temp = temp->next;
-            }
-            else{
+            temp = temp->next;
+            if(temp == nullptr){
                 throw std::out_of_range("Invalid index!");
             }
         }
         if(temp == nullptr){
             throw std::out_of_range("Invalid index!");
         }
-        printf("%d", temp->data);
+        int x = temp->data;
     }
 };
 
@@ -373,18 +382,20 @@ public:
     }
 
     void peekAt(int index){
-        printf("%d", data[index])<<'\n';
+        if(index<0 || index>size){
+            throw std::out_of_range("Index out of bounds!");
+        }
+        data[index];
     }
 };
 
 // -------------- TESTY --------------
 
-void testAddFront() {
-    std::cout << "--- Adding to the front (time in ns) ---\n";
+void test(){
     std::cout << "N;ARR;SLL;DLL\n";
 
     std::vector<int> v = {10, 100, 1000, 10000};
-    int samples = 10;
+    int samples = 100;
 
     for (int N : v){
         long long ARR_TIME = 0, SL_TIME = 0, DL_TIME = 0;
@@ -402,19 +413,19 @@ void testAddFront() {
 
             // POMIAR TABLICY
             auto start = std::chrono::high_resolution_clock::now();
-            arr.insFront(99);
+            arr.peekAt(N/2);
             auto end = std::chrono::high_resolution_clock::now();
             ARR_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
             // POMIAR LISTY JEDNOKIERUNKOWEJ
             start = std::chrono::high_resolution_clock::now();
-            sl.addFront(99);
+            sl.lookAt(N/2);
             end = std::chrono::high_resolution_clock::now();
             SL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
             // POMIAR LISTY DWUKIERUNKOWEJ
             start = std::chrono::high_resolution_clock::now();
-            dl.addFront(99);
+            dl.lookAt(N/2);
             end = std::chrono::high_resolution_clock::now();
             DL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
         }
@@ -426,6 +437,6 @@ void testAddFront() {
 }
 
 int main(){
-    testAddFront();
+    test();
     return 0;
 }
