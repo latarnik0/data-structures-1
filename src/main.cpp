@@ -424,7 +424,7 @@ void test(){
             end = std::chrono::high_resolution_clock::now();
             SL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
-            // DOUBLY LINKED LIST MEASUREMENTJ
+            // DOUBLY LINKED LIST MEASUREMENT
             start = std::chrono::high_resolution_clock::now();
             dl.lookAt(N/2);
             end = std::chrono::high_resolution_clock::now();
