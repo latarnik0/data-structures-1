@@ -64,3 +64,13 @@ Below are tables with the measurement results of individual operations in *nanos
 | **Removing at the end** | ***O(1)*** | *O(N)* | *O(N)* |
 | **Removing from the given index** | *O(N)* | *O(N)* | *O(N)* |
 | **Access** | ***O(1)*** | *O(N)* | *O(N)* |
+
+#### Dynamic Array Summary
+The measurements are correct and are direct result of the architecture of these structures. A dynamic array is a contiguous block in RAM. It contains a variable that stores the number of elements `size` in the array, so adding and removing from the end has a constant computational complexity of ***O(1)*** because the location of the operation is known in advance.
+The same applies to reading a given element. The processor uses simple arithmetic to quickly determine the address of the value we want to access.
+When it comes to adding/removing from the beginning or to a given index, the computational complexity is linear
+***O(N)*** because the processor must physically move all elements in the array up to the specified index
+and only then insert or remove the value. In the case of deletion, the processor must "patch the hole" created
+by removing the element, also by moving the elements.
+#### Linked Lists Summary
+In the case of linked lists, the data is not stored as a contiguous block in memory; it is dscattered through memory and uses pointers. It's impossible to mathematically calculate the address of the nth element. Adding and removing from the beginning of a list has a constant computational time of ***O(1)*** because we have access to the `head` variable. When adding or removing from the end or from a given index, we must traverse the entire list to the nth index to perform the read, add, or remove operation. This is where singly and doubly linked lists differ. If we already have the index of the element we want to remove, we can't perform this operation in a singly linked list with O(1) complexity because in a singly linked list, the list only looks forward, and to reconnect pointers after removal, we must traverse the list again to find the previous element. In a doubly linked list, this problem is eliminated because, by definition, it has a pointer to its previous neighbor `prev`.

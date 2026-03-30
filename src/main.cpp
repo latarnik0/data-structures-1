@@ -6,7 +6,7 @@
 
 // -------------- DOUBLY LINKED LIST --------------
 
-// pojedynczy węzeł
+// NODE
 class node{
 public:
     int data;
@@ -20,7 +20,7 @@ public:
     }
 };
 
-// lista 
+// LIST 
 class dlist{
 private:
     node* head;
@@ -166,6 +166,7 @@ public:
 
 // -------------- SINGLY LINKED LIST --------------
 
+// NODE
 class snode{
 public:
     int data;
@@ -177,7 +178,7 @@ public:
     }
 };
 
-// lista
+// LIST
 class slist{
 private:
     snode* head;
@@ -285,7 +286,7 @@ public:
     }
 };
 
-//-------------------- TABLICA DYNAMICZNA ----------------------
+//-------------------- DYNAMIC ARRAY ----------------------
 
 class darray{
     int* data;
@@ -389,7 +390,7 @@ public:
     }
 };
 
-// -------------- TESTY --------------
+// -------------- TESTS --------------
 
 void test(){
     std::cout << "N;ARR;SLL;DLL\n";
@@ -411,26 +412,26 @@ void test(){
                 dl.addBack(i);
             }
 
-            // POMIAR TABLICY
+            // ARRAY MEASUREMENT
             auto start = std::chrono::high_resolution_clock::now();
             arr.peekAt(N/2);
             auto end = std::chrono::high_resolution_clock::now();
             ARR_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
-            // POMIAR LISTY JEDNOKIERUNKOWEJ
+            // SINGLY LINKED LIST MEASUREMENT
             start = std::chrono::high_resolution_clock::now();
             sl.lookAt(N/2);
             end = std::chrono::high_resolution_clock::now();
             SL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
-            // POMIAR LISTY DWUKIERUNKOWEJ
+            // DOUBLY LINKED LIST MEASUREMENTJ
             start = std::chrono::high_resolution_clock::now();
             dl.lookAt(N/2);
             end = std::chrono::high_resolution_clock::now();
             DL_TIME += std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
         }
 
-        // WYNIKI DLA DANEGO 'N'
+        // RESULTS
         std::cout<<N<<";"<<(ARR_TIME/samples)<<";"<<(SL_TIME/samples)<<";"<<(DL_TIME/samples)<<"\n";
     }
     std::cout << "\n";
